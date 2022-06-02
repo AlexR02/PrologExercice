@@ -1,0 +1,38 @@
+progenitor(joao, joaquin).
+progenitor(joana, joaquin).
+progenitor(joao, serafina).
+progenitor(joana, serafina).
+progenitor(serafina, maria).
+progenitor(serafina, ana).
+progenitor(joaquin, marcelino).
+progenitor(marcelino, aristides).
+progenitor(maria, aristides).
+
+masculino(joao).
+masculino(joaquin).
+masculino(marcelino).
+masculino(aristides).
+
+feminino(joana).
+feminino(serafina).
+feminino(maria).
+feminino(ana).
+
+irmao(X,Z) :- masculino(X),progenitor(Y,X),progenitor(Y,Z),X\=Z.
+irma(X,Z) :- feminino(X),progenitor(Y,X),progenitor(Y,Z),X\=Z.
+mae(X,Y) :- feminino(X),progenitor(X,Y).
+pai(X,Y) :- masculino(X),progenitor(X,Y).
+avo(X,Z) :- progenitor(Y,X),progenitor(Z,Y).
+tio(X,Z) :- progenitor(Y,X),(irmao(Y,Z);irma(Y,Z)).
+primo(X,Y) :- tio(X,Z),progenitor(Z,Y).
+descendente(X,Y) :- progenitor(X,Y).
+descendente(X,Z) :- progenitor(X,Y),descendente(Y,Z).
+
+%Exercícios
+%1 - progenitor(jose,joaquin). jose = progenitor, joaquin = prole
+%2 - progenitor(joana,Y). joana = progenitor, Y = prole
+%3 - primo(marcelino,Y). marcelino = primo, Y = primo
+%4 - tio(X,Z). X = sobrinho, Z = tio
+%5 - descendente(X,aristides). X = ascendente, aristides = descendente
+%6.1 - irmao(_,maria). retorna true se maria tiver algum irmão
+%6.2 - irma(_,maria). retorna true se maria tiver alguma irmã
